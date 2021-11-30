@@ -29,7 +29,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        Mail::to(Auth::user())->send(new WelcomeMail(Auth::user()));
         $view = view('main.home');
 
         $view->categories = Category::all();
