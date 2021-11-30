@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactDetailsController;
@@ -32,7 +33,7 @@ Route::post('/contact', [ContactController::class, 'create'])->name('contact.sto
 // Routes where auth is needed
 Route::group(['middleware' => 'auth'], function () {
     // Register Route
-    Route::post('/register', [ContactController::class, 'create']);
+    Route::post('/register', [RegisterController::class, 'create']);
 
     // Admin Routes
     Route::get('/admin/home', [AdminController::class, 'index'])->name('admin.home');

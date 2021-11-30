@@ -25,15 +25,16 @@ class ContactDetailsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, $id = 1)
     {
         $information = ContactDetails::findOrFail($id);
 
-        $this->validate($request, [
+        $validated = $request->validate([
             'name' => 'required',
             'address' => 'required',
             'zipcode' => 'required',
@@ -42,18 +43,12 @@ class ContactDetailsController extends Controller
             'phone' => 'required'
         ]);
 
-        var_dump($request);
-        exit;
+        if ($validated) {
+            $information->fill($request->all())->save();
 
-        $information->name = $request->name;
-        $information->address = $request->name;
-        $information->zipcode = $request->name;
-        $information->city = $request->name;
-        $information->email = $request->name;
-        $information->phone = $request->name;
+            return back()->with("success", "Record updated!");
+        }
 
-        $information->save();
-
-        return redirect('admin/home');
+        return back()->withErrors($validated);
     }
 }

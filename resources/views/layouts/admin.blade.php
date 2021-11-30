@@ -71,6 +71,10 @@
     </nav>
 
     <main>
+        <div class="container mt-3">
+            @include('flash-message')
+        </div>
+
         @yield('content')
     </main>
 </div>
